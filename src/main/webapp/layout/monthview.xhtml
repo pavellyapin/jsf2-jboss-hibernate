@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+
+<ui:composition>
+ <h:form id="friendForm" style = "padding:0px">
+ <p:remoteCommand name="updateCal" update="schedule dayschedule" actionListener="#{scheduleView.updateView}" />
+ <p:remoteCommand name="updateReminder" update="reminderCarousel" actionListener="#{reminderView.init}" />
+ <p:remoteCommand name="detailsUpdate" update="eventDetails" actionListener="#{scheduleView.findTask}" />
+ <p:messages id="messages" showDetail="true" closable="true"/> 
+ 
+<h:panelGrid columns = "2">
+
+<h:panelGrid columns = "2">
+			<h:panelGrid>
+            <ui:insert name="dayview">
+      			   <ui:include src="dayview.xhtml" />
+ 			</ui:insert>
+ 			</h:panelGrid>
+
+<h:panelGrid columns = "1">
+
+        
+ 
+    
+      <h:panelGrid columns = "2" style="background-color: #e6e6e6;width:980px">
+  		
+  		        
+                 <p:panel>
+         <p:schedule 
+         id="schedule" 
+         aspectRatio = "5" 
+         value="#{scheduleView.eventModel}"
+         widgetVar="myschedule" 
+         timeZone="GMT-5" 
+         showHeader = "true">
+ 
+            <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="from to"/>
+            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails"/> 
+            <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update="messages eventDetails dayschedule" />
+            <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update="messages eventDetails dayschedule" />
+ 
+        </p:schedule>
+      </p:panel>
+      
+        
+    </h:panelGrid>
+   
+<p:panel>
+  <h:panelGrid  columns = "2" id="eventDetails" style="border-width: 3px;">                     
+    <h:panelGrid columns = "1">
+    <h:panelGrid columns = "4" style ="margin-left:200px">	     
+			                	           
+			                        <p:commandButton 
+							            id="saveButton"
+							            update = "messages eventDetails" 
+							            value="Save" 
+							            actionListener="#{scheduleView.AddEvent}" 
+							            oncomplete="updateCal();updateReminder()"							            
+							            disabled = "#{scheduleView.saveDisabled}" >
+							            <p:confirm header="Confirm Save" message="Save Changes?" icon="ui-icon-alert" />	
+							            </p:commandButton>
+							            <h:commandLink action="#{scheduleView.createPDF}" disabled = "#{scheduleView.pdfDisabled}">					            		
+									            <p:commandButton value="PDF" disabled = "#{scheduleView.pdfDisabled}"/>
+									     </h:commandLink>
+									            <p:commandButton 
+										            id="addButton" 
+										            value="Reset"
+										            style = "margin-left:150px" 
+										            actionListener="#{scheduleView.newTask}"										            
+										            update = "eventDetails schedule dayschedule">
+										            <p:confirm header="Confirm Reset" message="You may lose unsaved data, reset form?" icon="ui-icon-alert" />												            
+										            </p:commandButton>
+										            	<p:commandButton
+										            		disabled = "#{scheduleView.deleteDisabled}" 
+												            id="deleteButton" 
+												            value="Delete"												             
+												            actionListener="#{scheduleView.deleteTask}"
+												            oncomplete="updateCal();updateReminder()"										            
+												            update = "eventDetails availableFriends">
+												            <p:confirm header="Confirm Delete" message="This Item will be removed from your plan, delete it?" icon="ui-icon-alert" />
+												            </p:commandButton>	
+												            
+												            <p:confirmDialog global="true" showEffect="fade">
+														        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+														        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+														    </p:confirmDialog>								                
+    
+    </h:panelGrid>
+    <h:panelGrid columns = "2" style = "text-align: center">
+          <h:outputLabel for="title" value="Title:" style = "font-weight: bold;"/>
+          <p:inputText id="title" value="#{scheduleItem.name}" style="width:350px">          
+          </p:inputText>
+    </h:panelGrid>
+           			<p:selectOneRadio id="itemType" value="#{scheduleItem.type}" layout="custom">
+		            <f:selectItem itemLabel="Appoinment" itemValue="appoinmentPro" />
+		            <f:selectItem itemLabel="Meeting" itemValue="meetingPro" />
+		            <f:selectItem itemLabel="TO-DO" itemValue="todoPro" />
+		            <f:selectItem itemLabel="Meals" itemValue="mealsHome" />
+		            <f:selectItem itemLabel="Order" itemValue="orderHome" />
+		            <f:selectItem itemLabel="Leasure" itemValue="leasureHome" />
+		            <f:selectItem itemLabel="Morning" itemValue="morningContact" />
+		            <f:selectItem itemLabel="Lunch" itemValue="lunchContact" />
+		            <f:selectItem itemLabel="Night" itemValue="nightContact" />
+                </p:selectOneRadio>
+      <h:panelGrid columns = "3">  
+ 
+    <h:panelGrid columns = "1" >
+    <img src="./images/typePro.png"/>
+    <p:panel style="border-width: 3px;width:200px;background:#deefff;">
+    <h:panelGrid columns = "3" style = "text-align:center">
+    <h:panelGrid columns = "1">
+    	<p:radioButton id="opt1" for="itemType" itemIndex="0"/>
+    	<h:outputLabel  value="Appointment" style="color:rgb(20,182,20);font-weight: bold;"/>
+    </h:panelGrid>
+    <h:panelGrid columns = "1" style = "margin-left:10px">
+    	<p:radioButton id="opt2" for="itemType" itemIndex="1"/>
+    	<h:outputLabel  value="Meeting" style="color:rgb(128,206,128);font-weight: bold;"/>
+    </h:panelGrid>
+    <h:panelGrid columns = "1" style = "margin-left:10px">
+    	<p:radioButton id="opt3" for="itemType" itemIndex="2"/>
+    	<h:outputLabel  value="TO-DO" style="color:rgb(37,74,37);font-weight: bold;"/>
+    </h:panelGrid>
+    </h:panelGrid>
+    </p:panel>
+    </h:panelGrid>       
+    
+        <h:panelGrid columns = "1" >    			
+    <img src="./images/iconHome.png"/>
+    <p:panel style="width:163px;margin-top:0px;background: #deefff;border-width: 3px;">
+    <h:panelGrid columns = "3" style = "text-align:center">
+    <h:panelGrid columns = "1" style = "margin-left:10px">
+    	<p:radioButton id="opt4" for="itemType" itemIndex="3" />
+    	<h:outputLabel  value="Meals" style="color:rgb(219,197,14);font-weight: bold;"/>
+    </h:panelGrid>
+    <h:panelGrid columns = "1" style = "margin-left:10px">
+   		 <p:radioButton id="opt5" for="itemType" itemIndex="4"/>
+   		 <h:outputLabel  value="Order" style="color:rgb(198,194,157);font-weight: bold;"/>
+    </h:panelGrid>
+    <h:panelGrid columns = "1" style = "margin-left:10px">
+    	<p:radioButton id="opt6" for="itemType" itemIndex="5"/>
+    	<h:outputLabel  value="Leasure" style="color:rgb(120,110,28);font-weight: bold;"/>    
+    </h:panelGrid>
+    </h:panelGrid>
+    </p:panel>
+    
+    </h:panelGrid> 
+            <h:panelGrid columns = "1" style = "margin-top:3px;" >    			
+    <img src="./images/withIcon.png"/>
+    <p:panel style="width:160px;margin-top:0px;background: #deefff;border-width: 3px;">
+    <h:panelGrid columns = "3" style = "text-align:center">
+    <h:panelGrid columns = "1" style = "margin-left:10px">
+    	<p:radioButton id="opt7" for="itemType" itemIndex="6"/>
+    	<h:outputLabel  value="Morning" style="color:rgb(40,172,233);font-weight: bold;"/>
+    </h:panelGrid>
+    
+    <h:panelGrid columns = "1" style = "margin-left:10px">
+    	<p:radioButton id="opt8" for="itemType" itemIndex="7"/>
+    	<h:outputLabel  value="Lunch" style="color:rgb(16,83,114);font-weight: bold;"/>
+    </h:panelGrid>
+    
+    <h:panelGrid columns = "1" style = "margin-left:10px">
+    	<p:radioButton id="opt9" for="itemType" itemIndex="8"/>
+    	<h:outputLabel  value="Night" style="color:rgb(167,185,193);font-weight: bold;"/>
+    </h:panelGrid>
+    </h:panelGrid>
+    </p:panel>
+    
+    </h:panelGrid>   
+ 
+    </h:panelGrid>
+        <h:panelGrid  style = "text-align:left;" columns="3">
+        <h:panelGrid  columns="1" style="width:220px">        
+ 
+            <h:outputLabel for="from" value="From:" style = "font-weight: bold;"/>
+            <p:calendar id="from" value="#{scheduleItem.startDate}" pattern="MM/dd/yyyy HH:mm" showOn="button"/>
+  
+            <h:outputLabel for="to" value="To:" style = "font-weight: bold;"/>
+            <p:calendar id="to" value="#{scheduleItem.endDate}" pattern="MM/dd/yyyy HH:mm" showOn="button"/> 
+            
+            <h:outputLabel for="location" value="Location:" style = "font-weight: bold;"/>            
+            <p:inputTextarea id="location" rows="3" cols="25" value="#{scheduleItem.location}"/>   
+            
+            
+        </h:panelGrid>
+        <h:panelGrid>
+        	<h:outputLabel for="reminderOpt" value="Set a Reminder" style = "font-weight: bold;"/>
+            <p:selectBooleanCheckbox id = "reminderOpt" value="#{scheduleItem.reminder}" style = "margin-left:15px;"/>
+            
+            <h:outputLabel for="urgentOpt" value="Mark as Urgent" style = "font-weight: bold;"/>
+            <p:selectBooleanCheckbox id = "urgentOpt" value="#{scheduleItem.priority}" style = "margin-left:15px;"/>        
+        </h:panelGrid>
+        			<p:fieldset 
+        			id="selectedFriends"
+        			style="width:250px;height:140px;margin-left:40px;">        			
+        			   <f:facet name="legend">
+						    <h:panelGrid columns = "1">
+						    <img src="./images/involvedIcon.png"/>
+						    </h:panelGrid>
+					   </f:facet>
+					   <p:scrollPanel style="width:250px;height:100px;">
+				            <p:dataTable 
+				            id="selectedFriendsTable" 
+				            var="friendUsers" 
+				            value="#{scheduleView.droppedFriends}">
+				                <p:column headerText="Id">
+				                    <h:outputText value="#{friendUsers.firstname}" />
+				                    <h:outputText value=","/>
+                					<h:outputText value="#{friendUsers.lastname}"/>
+				                </p:column>
+				                            <p:column style="width:20px">
+											        <h:commandLink action="#{scheduleView.onFriendRemove}" update= "selectedFriendsTable">    
+											        <f:param name="friendid" value="#{friendUsers.id}" />    
+													    <img src="./images/removeFriend.png"/>		    
+													</h:commandLink>
+								            </p:column>
+				            </p:dataTable>
+				        </p:scrollPanel>
+				        
+				    </p:fieldset>
+        
+        </h:panelGrid>
+        <p:editor 
+        id="editor" 
+        widgetVar="editorWidget" 
+        value="#{scheduleItem.notes}" 
+        width="600"
+        height="220" />
+        </h:panelGrid>
+        <p:panel columns = "1" style = "background: #deefff;height:550px;border-width: 5px;">
+<ui:insert name="friendmanager">
+       <ui:include src="friendmanager.xhtml" />
+ </ui:insert>
+
+<ui:insert name="reminder">
+       <ui:include src="reminder.xhtml" />
+ </ui:insert>
+
+</p:panel>
+        </h:panelGrid>
+        </p:panel>
+        
+
+
+    </h:panelGrid> 
+  			
+
+</h:panelGrid>
+
+
+</h:panelGrid> 
+</h:form>
+
+<style type="text/css">
+    .value {
+        width: 1200px;
+    }
+    
+    .ui-panel .ui-panel-content{
+    padding:0px;
+    }
+</style>
+
+</ui:composition>
+</html>

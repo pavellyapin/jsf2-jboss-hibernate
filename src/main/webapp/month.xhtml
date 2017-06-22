@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <f:metadata>  
+       		<f:event type="preRenderView" listener="#{socialauthenticator.verify}" />  
+    </f:metadata>  
+</h:head>     
+<ui:composition template="layout/monthtemplate.xhtml">
+
+
+  <ui:define name="content">       
+    <style type="text/css">
+    .value {
+        width: 1000px;
+        }        
+</style>
+  </ui:define>
+</ui:composition>
+</html>

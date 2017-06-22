@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+<h:panelGrid columns = "2">
+<h:panelGrid columns = "1" >
+
+<p:panel style="border-width: 3px;background:#deefff;text-align:right;">
+	<h:panelGrid columns = "2">
+     <h:outputLabel  value="Meeting" style="color:rgb(128,206,128);font-weight: bold"/>
+			 <p:inputSwitch value="#{scheduleView.showMeeting}" onLabel = "Show" offLabel = "Hide">
+			      <p:ajax listener="#{scheduleView.updateView}" update = "schedule dayschedule" />
+			 </p:inputSwitch>
+
+     <h:outputLabel  value="TO-DO" style="color:rgb(37,74,37);font-weight: bold"/>
+			 <p:inputSwitch value="#{scheduleView.showToDoWork}" onLabel = "Show" offLabel = "Hide">
+			      <p:ajax listener="#{scheduleView.updateView}" update = "schedule dayschedule" />
+			 </p:inputSwitch>
+			 
+	<h:outputLabel  value="Appointment" style="color:rgb(20,182,20);font-weight: bold"/>  
+			 <p:inputSwitch value="#{scheduleView.showAppointment}" onLabel = "Show" offLabel = "Hide">
+	          <p:ajax listener="#{scheduleView.updateView}" update = "schedule dayschedule" />
+	        </p:inputSwitch>
+	  </h:panelGrid>
+</p:panel>
+
+<p:panel style="border-width: 3px;background:#deefff;text-align:right;">
+	<h:panelGrid columns = "2" style = "margin-left:27px">	        
+	<h:outputLabel  value="Meals" style="color:rgb(219,197,14);font-weight: bold"/>  
+	        <p:inputSwitch value="#{scheduleView.showMeals}" onLabel = "Show" offLabel = "Hide">
+	             <p:ajax listener="#{scheduleView.updateView}" update = "schedule dayschedule" />
+	        </p:inputSwitch>
+	        
+	<h:outputLabel  value="Order" style="color:rgb(198,194,157);font-weight: bold"/>
+	        <p:inputSwitch value="#{scheduleView.showOrder}" onLabel = "Show" offLabel = "Hide">
+	             <p:ajax listener="#{scheduleView.updateView}" update = "schedule dayschedule" />
+	        </p:inputSwitch>
+	        
+	<h:outputLabel  value="Leasure" style="color:rgb(120,110,28);font-weight: bold"/>	        
+	        <p:inputSwitch value="#{scheduleView.showLeasure}" onLabel = "Show" offLabel = "Hide">
+	             <p:ajax listener="#{scheduleView.updateView}" update = "schedule dayschedule" />
+	        </p:inputSwitch>
+	  </h:panelGrid>
+</p:panel>
+
+<p:panel style="border-width: 3px;background:#deefff;text-align:right;">
+	<h:panelGrid columns = "2" style = "margin-left:27px">	        
+    <h:outputLabel  value="Morning" style="color:rgb(40,172,233);font-weight: bold"/>
+	        <p:inputSwitch value="#{scheduleView.showMorning}" onLabel = "Show" offLabel = "Hide">
+	             <p:ajax listener="#{scheduleView.updateView}" update = "schedule dayschedule" />
+	        </p:inputSwitch>
+    <h:outputLabel  value="Lunch" style="color:rgb(16,83,114);font-weight: bold"/>
+	        <p:inputSwitch value="#{scheduleView.showLunch}" onLabel = "Show" offLabel = "Hide">
+	             <p:ajax listener="#{scheduleView.updateView}" update = "schedule dayschedule" />
+	        </p:inputSwitch>
+    <h:outputLabel  value="Night" style="color:rgb(167,185,193);font-weight: bold"/>
+	        <p:inputSwitch value="#{scheduleView.showNight}" onLabel = "Show" offLabel = "Hide">
+	            <p:ajax listener="#{scheduleView.updateView}" update = "schedule dayschedule" />
+	        </p:inputSwitch>
+	  </h:panelGrid>
+</p:panel>	        
+            </h:panelGrid>
+           
+    <p:panel style="border-width: 5px;border-color:#deefff;width:350px;" columnClasses="daydash"> 
+       <p:schedule id="dayschedule" 
+       value="#{scheduleView.eventModel}"
+       widgetVar="mydayschedule"
+       timeZone="GMT-4"
+       view = "agendaDay"
+       showHeader = "false"
+       firstHour = "1" 
+       aspectRatio = "0.5">
+       
+            <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="eventDetails"/>
+            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails"/> 
+            <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update="messages eventDetails" />
+            <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update="messages eventDetails" />
+              
+        </p:schedule>
+        
+ <style type="text/css"> 
+ .ui-state-highlight,.ui-widget-content .ui-state-highlight,.ui-widget-header .ui-state-highlight
+	{
+	color: #ffffff;
+	text-decoration: none;
+background: #deefff; /* Old browsers */
+background: -moz-linear-gradient(top,  #deefff 0%, #98bede 0%, #98bede 30%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#deefff), color-stop(0%,#98bede), color-stop(30%,#98bede)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #deefff 0%,#98bede 0%,#98bede 30%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #deefff 0%,#98bede 0%,#98bede 30%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #deefff 0%,#98bede 0%,#98bede 30%); /* IE10+ */
+background: linear-gradient(to bottom,  #deefff 0%,#98bede 0%,#98bede 30%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#deefff', endColorstr='#98bede',GradientType=0 ); /* IE6-9 */
+ }
+ 
+ .ui-panel{
+ padding:0px;
+ 
+ }
+  
+ </style>
+    </p:panel>
+    </h:panelGrid>
+    
+</html>

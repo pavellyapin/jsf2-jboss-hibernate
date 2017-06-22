@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">	
+
+  	  <h:head>
+  	<ui:insert name="header">
+      <ui:include src="header.xhtml" />
+    </ui:insert>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	    <title>MyPortalPlan</title>	        
+	  </h:head>
+  <body>
+         <ui:insert name="top">
+          <ui:include src="top.xhtml" />
+         </ui:insert> 
+         
+   <h:panelGrid cellspacing="0" cellpadding="0" styleClass="wrapper">
+      <h:panelGrid columns="2" style = "margin-left:200px">      
+          <h:panelGrid columns="1" styleClass="mainFunc">
+          <h:form>
+          <p:messages id="messages" autoUpdate = "true" showDetail="true" closable="true"/>
+          <ui:insert name="mainfuncs">
+            <ui:include src="mainfuncs.xhtml" />
+          </ui:insert>          
+          <ui:insert name="content" />  
+          </h:form>       
+          </h:panelGrid>
+          <h:panelGrid columns="1" style = "text-align: right">
+          <ui:insert name="portfolio">
+            <ui:include src="portfolio.xhtml" />
+          </ui:insert>
+          <h:panelGrid>
+          <h:form>
+          <ui:insert name="reminderMain">
+            <ui:include src="reminderMain.xhtml" />
+          </ui:insert>
+          </h:form>
+          </h:panelGrid>
+          <p:panel style = "border-width:3px;width:363px;background-color:rgb(152,190,222);">
+          <iframe 
+                style = "margin-left:5px"
+				title="Environment Canada Weather" 
+				width="300px" 
+				height="200px" 
+				src="//weather.gc.ca/wxlink/wxlink.html?cityCode=on-143&amp;lang=e" 
+				allowtransparency="true" 
+				frameborder="0">
+				</iframe>
+          </p:panel>
+          </h:panelGrid>
+      </h:panelGrid>
+    </h:panelGrid> 
+    
+         <ui:insert name="footer">
+          <ui:include src="footer.xhtml" />
+         </ui:insert> 
+    
+        
+   </body>
+     
+</html>

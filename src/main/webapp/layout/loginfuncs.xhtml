@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+
+<ui:composition>
+    <p:panel id="mainPanel" styleClass="loginFuncs">
+				
+	<h:form id="loginForm">
+		<h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="Name:" />
+                    <p:inputText value=""/>
+ 
+                    <h:outputText value="Password:" />
+                    <p:inputText value=""/>
+                  </h:panelGrid>
+                  
+                  <h:panelGrid columns = "1" style="text-align:center;">
+                  <h:commandButton actionListener="#{userManager.login}" value="Login" />
+			      <h:commandLink action="#{userContext.handleSignUp}" value="Not a member yet?Sign-up it's free!"/>
+                  </h:panelGrid>
+
+	</h:form>
+    </p:panel>    
+</ui:composition>
+</html>

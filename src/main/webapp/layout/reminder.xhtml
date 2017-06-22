@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:mashup="http://code.google.com/p/mashups4jsf/"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:of="http://omnifaces.org/functions">
+
+<ui:composition>
+<h:panelGrid columns = "1">
+     <p:carousel 
+     headerText="Reminders"
+     id = "reminderCarousel"
+     value="#{reminderView.reminders}" 
+     style="height:180px;width:307px;"
+     itemStyle="width:306px;"      
+     circular ="true" 
+     vertical = "true"  
+     var="reminderItem"
+     widgetVar = "remindersList" 
+     numVisible="4">  
+        <h:panelGrid columns="2" style="width:100%" columnClasses="label,value"> 
+        <h:commandLink actionListener="#{scheduleView.findTask}">
+		    <f:param name="id" value="#{reminderItem.scheduleItemid}" />		    
+		    <img src="./images/linkTask.png"/>
+		</h:commandLink>         
+        <h:panelGrid columns = "1" style = "text-align:left;">
+         <h:outputText value="#{reminderItem.descr}" />
+         <h:panelGrid columns = "2" >
+         <h:outputText value="Start Time:" style = "font-weight: bold;"/>
+         <h:outputText value="#{reminderItem.remindDate}" />
+         </h:panelGrid>
+        </h:panelGrid> 
+        </h:panelGrid>
+    </p:carousel>
+</h:panelGrid>
+</ui:composition>
+</html>

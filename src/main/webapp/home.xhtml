@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="layout/template.xhtml">        
+<ui:define name="content">
+    <p:panel 
+    style="width:400px;font-size: 20px;">
+				
+	<h:form>
+	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<h:panelGrid columns="2" >
+                    <h:outputText value="Name:" />
+                    <p:inputText id = "username" value = "#{userLogin.username}">
+                    
+                    </p:inputText>
+ 
+                    <h:outputText value="Password:" />
+                    <p:password id = "password" value = "#{userLogin.password}"/>                   
+                                        
+                    <h:panelGrid>
+                    <p:commandButton action="#{userContext.handleLogin}" value="Login" />
+                    </h:panelGrid>
+                  </h:panelGrid>
+                  </h:form>
+                  
+                  <h:panelGrid columns = "1" style="text-align:center;">  
+                  <h:form>               
+			      <h:commandLink action="#{userContext.handleSignUp}" value="Not a member yet?Sign-up it's free!"/>
+			      </h:form> 
+                  </h:panelGrid>
+
+	
+    </p:panel>
+    <h:outputText value="While this application is still in development, you're welcome to create a user and test the features!" style = "margin-top:20px"/>
+          
+</ui:define>
+</ui:composition>
+</html>

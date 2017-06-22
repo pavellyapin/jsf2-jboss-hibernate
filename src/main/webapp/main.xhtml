@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:mashup="http://code.google.com/p/mashups4jsf/">
+<h:head>
+
+</h:head>      
+<ui:composition template="layout/maintemplate.xhtml">
+  <ui:define name="content">
+        <p:scrollPanel id = "mainScroll" style = "height:893px;">
+        <mashup:rssFeedReader feedURL="#{newsManager.newsFeed}"
+                                 maximumCount="20"
+                                 channelVar="channel"
+                                 itemVar="item"
+                                 itemIndex="itemIndex"
+                                 id = "newsreader">
+                   <f:facet name="item">
+                   <p:panel>
+                   <f:facet name="header">
+                   <h:outputLink 
+                     value="#{item.link}" 
+                     style = "text-align:left;font-size: 110%;font-family: Verdana, Arial, Helvetica, sans-serif;">
+                     #{item.title}</h:outputLink>
+                   </f:facet>
+                   <h:panelGrid columns="1" style = "text-align:left;font-size: 130%;font-family: cursive;">          
+                     <h:outputText 
+                     value="#{item.description.value}" 
+                     converter="rssParser" 
+                     style = "text-align:left;font-size: 100%;font-family: Verdana, Arial, Helvetica, sans-serif;"/>
+                    </h:panelGrid>
+                    </p:panel>
+                             
+                   </f:facet>
+                   <p:separator />                
+        </mashup:rssFeedReader>
+        </p:scrollPanel>
+  </ui:define>
+</ui:composition>
+</html>

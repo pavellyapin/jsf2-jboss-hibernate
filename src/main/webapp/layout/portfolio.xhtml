@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+<h:form>
+ <p:remoteCommand name="updatePortfolio" update="stocklist1 stocklist2" actionListener="#{stockPortfolioView.init}" />
+
+<h:panelGrid columns="1" style = "text-align:left">
+		<p:commandLink onclick="PF('dlg2').show();">		    
+		    <img src="./images/portfolioSet.png"/>
+		</p:commandLink>
+    <p:carousel id = "stocklist1" 
+     value="#{stockPortfolioView.stocks1}" 
+     circular ="true" 
+     itemStyle="height:110px;width:180px;" 
+     headerText="#{stockPortfolioView.port1Name}" 
+     var="stockItem" 
+     numVisible="2">
+        <p:panelGrid columns="2" style="width:100%" columnClasses="label,value">
+            <f:facet name="header">
+                 <p:graphicImage url="#{stockItem.img}"/>
+            </f:facet>
+ 
+            <h:outputText value="Symbol:" />
+            <a href="#{stockItem.url}" target="_blank" style = "text-decoration: underline;color:rgb(16,83,114);">#{stockItem.symbol}</a>
+ 
+            <h:outputText value="Last" />
+            <h:outputText value="#{stockItem.price}" />
+ 
+            <h:outputText value="Change:" />
+            <h:outputText value="#{stockItem.sign}"/>
+ 
+            <h:outputText value="Volume" />
+            <h:outputText value="$#{stockItem.volume}" />
+
+        </p:panelGrid>
+    </p:carousel> 
+    
+         <p:carousel id = "stocklist2" 
+         value="#{stockPortfolioView.stocks2}" 
+         circular ="true" 
+         itemStyle="height:110px;width:180px;" 
+         headerText="#{stockPortfolioView.port2Name}" 
+         var="stockItem" 
+         numVisible="2">
+        <p:panelGrid columns="2" style="width:100%" columnClasses="label,value">
+            <f:facet name="header">
+                 <p:graphicImage url="#{stockItem.img}"/>
+            </f:facet>
+ 
+            <h:outputText value="Symbol:" />
+            <a href="#{stockItem.url}" target="_blank" style = "text-decoration: underline;color:rgb(16,83,114);">#{stockItem.symbol}</a>
+ 
+            <h:outputText value="Last" />
+            <h:outputText value="#{stockItem.price}" />
+ 
+            <h:outputText value="Change:" />
+            <h:outputText value="#{stockItem.sign}"/>
+ 
+            <h:outputText value="Volume" />
+            <h:outputText value="$#{stockItem.volume}" />
+
+        </p:panelGrid>
+    </p:carousel> 
+
+
+</h:panelGrid>
+
+<p:dialog 
+header="Portfolio Manager" 
+widgetVar="dlg2" 
+modal="true" 
+height="450" 
+resizable="false" 
+draggable="false"
+style = "text-align:center">
+<h:panelGrid columns = "2">
+			<h:panelGrid columns = "2">
+			            <h:outputLabel for="portName1" value="Portfolio Name:" />
+			            <p:inputText id="portName1" value="#{stockList1.name}"/> 
+			            
+			            <h:outputLabel for="port1stock1" value="1." />
+			            <p:inputText id="port1stock1" value="#{stockList1.stock1}"/>
+			            
+			            <h:outputLabel for="port1stock2" value="2." />
+			            <p:inputText id="port1stock2" value="#{stockList1.stock2}"/>
+			            
+			            <h:outputLabel for="port1stock3" value="3." />
+			            <p:inputText id="port1stock3" value="#{stockList1.stock3}"/>
+			            
+			            <h:outputLabel for="port1stock4" value="4." />
+			            <p:inputText id="port1stock4" value="#{stockList1.stock4}"/>
+			            
+			            <h:outputLabel for="port1stock5" value="5." />
+			            <p:inputText id="port1stock5" value="#{stockList1.stock5}"/>
+			            
+			            <h:outputLabel for="port1stock6" value="6." />
+			            <p:inputText id="port1stock6" value="#{stockList1.stock6}"/>
+			            
+			            <h:outputLabel for="port1stock7" value="7." />
+			            <p:inputText id="port1stock7" value="#{stockList1.stock7}"/>
+			            
+			            <h:outputLabel for="port1stock8" value="8." />
+			            <p:inputText id="port1stock8" value="#{stockList1.stock8}"/>
+			            
+			            <h:outputLabel for="port1stock9" value="9." />
+			            <p:inputText id="port1stock9" value="#{stockList1.stock9}"/>
+			            
+			            <h:outputLabel for="port1stock10" value="10." />
+			            <p:inputText id="port1stock10" value="#{stockList1.stock10}"/>
+			</h:panelGrid>
+			
+						<h:panelGrid columns = "2">
+			            <h:outputLabel for="portName2" value="Portfolio Name:" />
+			            <p:inputText id="portName2" value="#{stockList2.name}"/> 
+			            
+			            <h:outputLabel for="port2stock1" value="1." />
+			            <p:inputText id="port2stock1" value="#{stockList2.stock1}"/>
+			            
+			            <h:outputLabel for="port2stock2" value="2." />
+			            <p:inputText id="port2stock2" value="#{stockList2.stock2}"/>
+			            
+			            <h:outputLabel for="port2stock3" value="3." />
+			            <p:inputText id="port2stock3" value="#{stockList2.stock3}"/>
+			            
+			            <h:outputLabel for="port2stock4" value="4." />
+			            <p:inputText id="port2stock4" value="#{stockList2.stock4}"/>
+			            
+			            <h:outputLabel for="port2stock5" value="5." />
+			            <p:inputText id="port2stock5" value="#{stockList2.stock5}"/>
+			            
+			            <h:outputLabel for="port2stock6" value="6." />
+			            <p:inputText id="port2stock6" value="#{stockList2.stock6}"/>
+			            
+			            <h:outputLabel for="port2stock7" value="7." />
+			            <p:inputText id="port2stock7" value="#{stockList2.stock7}"/>
+			            
+			            <h:outputLabel for="port2stock8" value="8." />
+			            <p:inputText id="port2stock8" value="#{stockList2.stock8}"/>
+			            
+			            <h:outputLabel for="port2stock9" value="9." />
+			            <p:inputText id="port2stock9" value="#{stockList2.stock9}"/>
+			            
+			            <h:outputLabel for="port2stock10" value="10." />
+			            <p:inputText id="port2stock10" value="#{stockList2.stock10}"/>
+			</h:panelGrid>			
+</h:panelGrid>
+<h:panelGrid columns = "1" style = "width:100%">
+<p:commandButton 
+            id="updatePort" 
+            value="Save" 
+            action="#{stockPortfolioView.update}" oncomplete = "PF('dlg2').hide();updatePortfolio()"/>
+    <h:outputText value="Please insure the symbols you're entering are valid, by visiting:" style = "margin-top:20px"/>
+    <a href="http://www.nasdaq.com/" target="_blank"><img src="./images/nasdaqLogo.png"/></a> 
+    
+</h:panelGrid>
+</p:dialog>
+</h:form>
+</ui:composition>
+</html>

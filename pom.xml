@@ -1,0 +1,152 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.brickred</groupId>
+	<artifactId>socialauth-cdi-demo</artifactId>
+	<packaging>war</packaging>
+	<version>1.0</version>
+	<name>socialauth-cdi-demo</name>
+	<url>http://code.google.com/p/socialauth/</url>
+
+	
+		<licenses>
+		<license>
+			<name>The MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<connection>scm:svn:http://socialauth.googlecode.com/svn/trunk/</connection>
+		<url>http://socialauth.googlecode.com/svn/trunk/</url>
+	</scm>
+	<developers>
+		<developer>
+			<id>tsg</id>
+			<name>TSG BrickRed</name>
+			<email>tsg@brickred.com</email>
+		</developer>
+	</developers>
+
+	<properties>
+		<org.brickred.socialauth-version>[4.2,)</org.brickred.socialauth-version>
+	</properties>
+
+	<dependencies>
+<dependency>
+	<groupId>com.google.code.maven-play-plugin.org.allcolor.yahp</groupId>
+	<artifactId>yahp-internal</artifactId>
+	<version>1.3</version>
+</dependency>
+<dependency>
+	<groupId>net.sourceforge.htmlcleaner</groupId>
+	<artifactId>htmlcleaner</artifactId>
+	<version>2.2</version>
+</dependency>	
+	
+<dependency>
+	<groupId>org.jsoup</groupId>
+	<artifactId>jsoup</artifactId>
+	<version>1.7.3</version>
+</dependency>
+<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>font-awesome</artifactId>
+    <version>3.2.1</version>
+</dependency>
+<dependency>
+	<groupId>org.apache.avalon.framework</groupId>
+	<artifactId>avalon-framework-api</artifactId>
+	<version>4.3.1</version>
+</dependency>
+<dependency>
+	<groupId>org.apache.xmlgraphics</groupId>
+	<artifactId>fop</artifactId>
+	<version>1.0</version>
+</dependency>
+
+		<dependency>
+			<groupId>org.brickred</groupId>
+			<artifactId>socialauth</artifactId>
+			<version>${org.brickred.socialauth-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.faces</groupId>
+					<artifactId>jsf-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>javax.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xerces</groupId>
+					<artifactId>xercesImpl</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.seam.faces</groupId>
+			<artifactId>seam-faces</artifactId>
+			<version>3.0.0.Alpha3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<version>1.0.1.Final</version>
+		</dependency>
+		
+	<dependency>
+	  <groupId>org.hibernate</groupId>
+	  <artifactId>hibernate-entitymanager</artifactId>
+	  <version>4.3.8.Final</version>
+    </dependency>	
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1-beta-1</version>
+				<configuration>
+					<warName>socialauth-cdi-demo</warName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>jboss-repo</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>sonatype-oss-public</id>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+</project>

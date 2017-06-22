@@ -1,0 +1,41 @@
+package com.myobjects.ejb;
+
+import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import com.myobjects.model.RegisteredUser;
+
+
+
+@Stateless
+
+public class  UserServiceBean   {
+
+	@Inject
+	private Event<RegisteredUser> propEventSrc;
+	
+	@Inject
+	private EntityManager em;
+
+	
+	public void put(RegisteredUser p){
+		 
+	      em.persist(p);
+	      propEventSrc.fire(p);
+	}
+	 
+	public void delete(RegisteredUser p){
+
+		Query query = em.createQuery("delete FROM RegisteredUser p where p.key='"+p.getName()+"'");
+
+		query.executeUpdate();
+		propEventSrc.fire(p);
+		 	      
+	}
+
+
+
+}

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+<style type="text/css">
+    .ui-fieldset, .ui-fieldset .ui-fieldset-legend {
+        padding:0px;
+    }
+</style>
+ <p:remoteCommand name="updateContacts" update="availableFriends" action="#{scheduleView.getFriendList}"/>
+  <p:remoteCommand name="updateDialog" update="friendEdit" action="#{scheduleView.findFriend}" oncomplete = "PF('friendDialog').show();"/>
+ <h:panelGrid columns = "1">
+ 
+    <p:fieldset id="availableFriendsField">
+    <f:facet name="legend">
+    <h:panelGrid columns = "1">    
+    <img src="./images/contactsIcon.png"/> 
+    </h:panelGrid>
+    </f:facet>
+    <h:panelGrid columns = "2" style = "text-align:center">
+    
+    	<h:commandLink id="linkedin" name="linkedin" action="#{socialauth.login}"  actionListener="#{socialauthenticator.updateId}">		    
+		    <img src="./images/inImport.png"/>
+		</h:commandLink>
+		
+		<p:commandLink actionListener = "#{scheduleView.newFriend}" update = "friendEdit" oncomplete = "PF('friendDialog').show();">		    
+		    <img src="./images/addContact.png"/>
+		</p:commandLink>
+    
+    
+    </h:panelGrid>
+    <p:scrollPanel style="width:300px;height:250px;">
+        <p:dataTable 
+        id="availableFriends" 
+        var="friendUsers"
+        value = "#{scheduleView.friends}"
+        filteredValue="#{scheduleView.filteredFriends}">
+            <p:column style="width:20px">
+			        <h:commandLink action="#{scheduleView.onFriendDrop}" update= "selectedFriendsTable">    
+			        <f:param name="friendid" value="#{friendUsers.id}" />    
+					    <img src="./images/addFriend.png"/>		    
+					</h:commandLink>
+            </p:column>
+ 
+            <p:column headerText=" " filterBy="#{friendUsers.firstname}" filterMatchMode="contains" style = "text-align:left">
+            			        <p:commandLink actionListener="#{scheduleView.findFriendId}" oncomplete="updateDialog()">    
+						        <f:param name="friendid" value="#{friendUsers.id}" />    
+								    <img src="./images/editFriend.png"/>		    
+								</p:commandLink>                                
+                <h:outputText value="#{friendUsers.firstname}" style = "margin-left:8px;font-weight: bold;"/>
+                <h:outputText value="," style = "font-weight: bold;"/>
+                <h:outputText value="#{friendUsers.lastname}" style = "font-weight: bold;"/>                
+                
+            
+            </p:column>
+            
+            <p:column style="width:20px">
+            <a href="#{friendUsers.url}" target="_blank"><img src="#{friendUsers.img}"/></a>
+            </p:column>
+ 
+        </p:dataTable>
+         </p:scrollPanel>
+    </p:fieldset>
+   
+    
+    </h:panelGrid>
+
+    <p:dialog id = "friendEdit" header="Contact Details" widgetVar="friendDialog" resizable="false" draggable="false"
+                showEfffect="fade" hideEffect="fade" modal="true">
+		<h:panelGrid columns = "2">		
+			            <h:outputLabel  value="First Name:" />
+			            <p:inputText  value="#{newFriend.firstname}"/>
+			            <h:outputLabel  value="Last Name:" />
+			            <p:inputText  value="#{newFriend.lastname}"/>
+			            <h:outputLabel  value="Location:" />
+			            <p:inputTextarea rows="3" cols="25" value="#{newFriend.location}"/>			            
+			            <h:outputLabel  value="Email:" />
+			            <p:inputText  value="#{newFriend.email}"/>
+			            <h:outputLabel  value="Phone:" />
+			            <p:inputText  value="#{newFriend.phone}"/> 
+	     </h:panelGrid>
+	     <h:panelGrid columns = "1" style = "margin-top:20px">
+	     <p:commandButton 
+            id="createContact" 
+            value="Create" 
+            update = "messages"
+            actionListener="#{scheduleView.addFriend}" oncomplete = "PF('friendDialog').hide();updateContacts()"/>
+            <h:outputText value="You can make plans with this contact later!" />
+            <img src="./images/withIcon.png"/>
+	     </h:panelGrid>
+	     
+    </p:dialog>
+
+</html>
